@@ -1,0 +1,25 @@
+title: Conan Xu
+description: 关注 AI4Math、优化算法与科研工具。在这里分享项目、学习笔记和新的想法。
+url: https://conanxu-math.github.io
+baseurl: ""
+lang: zh-CN
+timezone: Asia/Shanghai
+markdown: kramdown
+permalink: /blog/:title/
+author: Conan Xu
+github_url: https://github.com/ConanXu-math
+email: 51280155015@stu.ecnu.edu.cn
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+exclude:
+  - README.md
+  - AGENTS.md
+  - .gitignore

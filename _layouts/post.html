@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<div class="container article-shell">
+  <a class="back-link" href="{{ '/blog/' | relative_url }}"><span aria-hidden="true">←</span> 回到全部文章</a>
+  <header class="article-header"><div class="post-meta"><span class="category-label">{{ page.category | escape }}</span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y 年 %m 月 %d 日' }}</time><span>{{ page.reading_time }} 分钟阅读</span></div><h1>{{ page.title | escape }}</h1><p class="article-deck">{{ page.description | escape }}</p><div class="article-author"><img src="{{ '/assets/avatar.png' | relative_url }}" alt="Conan Xu 的 GitHub 头像" width="36" height="36"><span>Conan Xu</span><span class="author-divider">/</span><span>项目导读</span></div></header>
+  <div class="article-body-grid"><article class="prose" id="article-content">{{ content }}</article><aside class="article-sidebar" aria-label="文章目录"><div class="toc-inner"><div class="eyebrow">这篇文章</div><nav id="article-toc" aria-label="文章章节"></nav><div class="reading-note">留一点时间，<br>把一个问题想明白。</div></div></aside></div>
+  <div class="article-ending"><span class="end-ornament" aria-hidden="true">✳</span><p>感谢读到这里。</p><div class="article-tags">{% for tag in page.tags %}<a href="{{ '/blog/' | relative_url }}?q={{ tag | url_encode }}"># {{ tag | escape }}</a>{% endfor %}</div><div class="share-actions"><button class="button button-outline" type="button" id="copy-link">复制文章链接 <span aria-hidden="true">↗</span></button><a class="text-link" href="{{ site.github_url }}" target="_blank" rel="noopener noreferrer">在 GitHub 交流 <span aria-hidden="true">↗</span></a></div><span class="copy-status" id="copy-status" role="status"></span></div>
+  {% assign other_posts = site.posts | where_exp: 'post', 'post.url != page.url' %}{% if other_posts.size > 0 %}<div class="related-post"><span class="eyebrow">还可以读</span>{% for post in other_posts limit: 1 %}<a href="{{ post.url | relative_url }}"><span>{{ post.title | escape }}</span><span aria-hidden="true">↗</span></a>{% endfor %}</div>{% endif %}
+</div>
