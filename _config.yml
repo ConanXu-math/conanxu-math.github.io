@@ -1,25 +1,116 @@
+theme: jekyll-theme-chirpy
 title: Conan Xu
-description: 关注 AI4Math、优化算法与科研工具。在这里分享项目、学习笔记和新的想法。
+tagline: AI4Math · Optimization · Lean
+description: 数学、代码与持续学习。Mathematics, code, and lifelong learning.
 url: https://conanxu-math.github.io
 baseurl: ""
 lang: zh-CN
 timezone: Asia/Shanghai
-markdown: kramdown
-permalink: /blog/:title/
-author: Conan Xu
-github_url: https://github.com/ConanXu-math
-email: 51280155015@stu.ecnu.edu.cn
+
+languages: [zh-CN, en]
+default_lang: zh-CN
+lang_vars: [lang]
+parallel_localization: false
+exclude_from_localization:
+  - assets/avatar.png
+  - assets/favicon.svg
+  - assets/img
+  - assets/css
+  - assets/js/dist
+  - assets/lib
+  - sitemap.xml
+  - no-end-for-learning
+
+github:
+  username: ConanXu-math
+social:
+  name: Conan Xu
+  email: 51280155015@stu.ecnu.edu.cn
+  links:
+    - https://github.com/ConanXu-math
+avatar: /assets/avatar.png
+social_preview_image: /assets/avatar.png
+theme_mode:
+toc: true
+paginate: 10
+comments:
+  provider:
+assets:
+  self_host:
+    enabled: false
+pwa:
+  enabled: false
+  cache:
+    enabled: false
+
+plugins:
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-archives
+  - jekyll-sitemap
+  - jekyll-include-cache
+  - jekyll-polyglot
+
+kramdown:
+  footnote_backlink: "&#8617;&#xfe0e;"
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+    permalink: /:title/
+
 defaults:
-  - scope:
-      path: ""
-    values:
-      layout: default
   - scope:
       path: ""
       type: posts
     values:
       layout: post
+      comments: false
+      toc: true
+      math: true
+      permalink: /blog/:title/
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+
+sass:
+  style: compressed
+  sourcemap: never
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  blanklines: false
+  ignore:
+    envs: [development]
+
 exclude:
   - README.md
+  - LICENSE
   - AGENTS.md
-  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
+  - assets/img/favicons
+  - assets/js/data/swconf.js
+
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/

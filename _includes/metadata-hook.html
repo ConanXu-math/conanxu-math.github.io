@@ -1,0 +1,6 @@
+<link rel="stylesheet" href="{{ '/assets/css/languages.css' | relative_url }}">
+{% unless page.layout == 'category' or page.layout == 'tag' %}
+<link rel="alternate" hreflang="zh-CN" {% static_href %}href="{{ site.url }}{{ page.url }}"{% endstatic_href %}>
+<link rel="alternate" hreflang="en" {% static_href %}href="{{ site.url }}/en{{ page.url }}"{% endstatic_href %}>
+<link rel="alternate" hreflang="x-default" {% static_href %}href="{{ site.url }}{{ page.url }}"{% endstatic_href %}>
+{% endunless %}

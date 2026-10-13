@@ -1,10 +1,10 @@
 ---
 title: "把教材、提问和学习资料放在一起"
 description: "从 VeryMath 智慧教材出发，介绍一个围绕教材阅读展开的本地学习工作台。"
-category: AI 与工具
-kind: 项目导读
+categories: [AI 与工具]
+lang: zh-CN
+permalink: /blog/course-copilot/
 tags: [学习工具, AI, 开源项目]
-reading_time: 3
 date: 2026-10-13 00:00:00 +0800
 ---
 

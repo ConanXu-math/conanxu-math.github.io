@@ -1,0 +1,8 @@
+{% assign switch_path = page.url %}
+{% if page.layout == 'category' %}{% assign switch_path = '/categories/' %}{% endif %}
+{% if page.layout == 'tag' %}{% assign switch_path = '/tags/' %}{% endif %}
+<nav class="language-switch" aria-label="Language / 语言">
+  <a {% static_href %}href="{{ site.url }}{{ switch_path }}"{% endstatic_href %} lang="zh-CN" hreflang="zh-CN"{% if site.active_lang == 'zh-CN' %} aria-current="true"{% endif %}>中文</a>
+  <span aria-hidden="true">/</span>
+  <a {% static_href %}href="{{ site.url }}/en{{ switch_path }}"{% endstatic_href %} lang="en" hreflang="en"{% if site.active_lang == 'en' %} aria-current="true"{% endif %}>English</a>
+</nav>

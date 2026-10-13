@@ -1,10 +1,10 @@
 ---
 title: "当迭代绕了一圈：三块 ADMM 的反例"
 description: "算法看起来一直在动，却没有走向解。从两个周期轨道出发，看看数值现象如何成为一个明确的数学反例。"
-category: 数学与优化
-kind: 项目导读
+categories: [数学与优化]
+lang: zh-CN
+permalink: /blog/admm-counterexample/
 tags: [ADMM, AI4Math, 优化算法]
-reading_time: 4
 date: 2026-10-13 00:00:00 +0800
 ---
 
