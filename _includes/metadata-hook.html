@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="{{ '/assets/css/languages.css' | relative_url }}">
+{% if page.math %}
+<link rel="stylesheet" href="{{ '/assets/css/math.css' | relative_url }}">
+{% endif %}
 {% unless page.layout == 'category' or page.layout == 'tag' %}
 <link rel="alternate" hreflang="zh-CN" {% static_href %}href="{{ site.url }}{{ page.url }}"{% endstatic_href %}>
 <link rel="alternate" hreflang="en" {% static_href %}href="{{ site.url }}/en{{ page.url }}"{% endstatic_href %}>
