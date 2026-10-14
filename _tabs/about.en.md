@@ -25,7 +25,7 @@ The [projects page](/projects/) provides links to the code and documentation.
 
 This is a place for research notes, project write-ups, and things I learn along the way. Chinese and English articles are maintained separately; use **中文 / English** at the top of the page to switch languages.
 
-The first two posts are introductions based on public project materials. Each retains links to its original repository or paper for further reading.
+The blog includes introductions based on public project materials, along with derivations and ideas developed while studying. Project introductions retain links to their original repositories or papers for further reading.
 
 ### Get in touch
 
