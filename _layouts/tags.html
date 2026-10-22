@@ -1,0 +1,6 @@
+---
+layout: default
+---
+{% assign ui = site.data.ui[site.active_lang] %}
+<header class="post-header"><h1>{{ ui.tags }}</h1></header>
+<div class="tag-list">{% for tag in site.tags %}<a href="{{ tag[0] | slugify | prepend: '/tags/' | append: '/' | relative_url }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>{% endfor %}</div>

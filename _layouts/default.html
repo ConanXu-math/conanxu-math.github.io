@@ -1,0 +1,39 @@
+<!doctype html>
+{% assign ui = site.data.ui[site.active_lang] %}
+<html lang="{{ site.active_lang }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% assign page_title = page.title | default: ui[page.layout] %}
+    <title>{% if page_title %}{{ page_title | escape }} · {% endif %}Conan Xu</title>
+    {% seo title=false %}
+    {% include favicons.html %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/assets/css/tailwind.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/math.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/jekyll-pygments-themes-github.css' | relative_url }}" media="(prefers-color-scheme: light)" id="highlight-light">
+    <link rel="stylesheet" href="{{ '/assets/css/jekyll-pygments-themes-native.css' | relative_url }}" media="(prefers-color-scheme: dark)" id="highlight-dark">
+    <link rel="alternate" type="application/rss+xml" title="{{ ui.blog }}" href="{{ '/feed.xml' | relative_url }}">
+    <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+    {% if page.math %}
+      <script>
+        window.MathJax = {
+          tex: {inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true},
+          options: {skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']}
+        };
+      </script>
+      <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+    {% endif %}
+    <script defer src="{{ '/assets/js/site.js' | relative_url }}"></script>
+  </head>
+  <body class="fixed-top-nav sticky-bottom-footer">
+    <a class="skip-link" href="#main">{{ ui.skip }}</a>
+    {% include header.html %}
+    <main id="main" class="container main-content" tabindex="-1">{{ content }}</main>
+    {% include footer.html %}
+    {% include search.html %}
+  </body>
+</html>

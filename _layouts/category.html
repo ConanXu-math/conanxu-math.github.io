@@ -1,0 +1,6 @@
+---
+layout: default
+---
+{% assign ui = site.data.ui[site.active_lang] %}
+<header class="post-header"><p class="breadcrumb"><a href="{{ '/categories/' | relative_url }}">{{ ui.categories }}</a></p><h1>{{ page.title }}</h1></header>
+{% include archive-posts.html %}

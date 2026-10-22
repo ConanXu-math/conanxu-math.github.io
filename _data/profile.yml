@@ -1,0 +1,30 @@
+zh-CN:
+  subtitle: AI4Math · 优化算法 · 形式化数学
+  bio: |
+    我关注 **AI4Math、优化算法和形式化数学**，也开发帮助研究与学习的工具。
+
+    我的研究与实践围绕一个朴素的问题展开：如何把一个数学想法，逐步变成可以理解、计算与检验的结果？我研究 ADMM 迭代的收敛性与反例，用 Lean 4 表达优化算法的假设和证明，并探索 AI 参与数学研究的方式。
+
+    这里也有一个[博客](/blog/)，记录推导、项目实践，以及学习过程中逐渐想明白的事。
+  paper_title: AI 辅助发现与构造三块 ADMM 的不收敛反例
+  paper_description: 当第三个约束块为单位阵时，直接三块 ADMM 仍可能不收敛。通过周期轨道研究这一结构的边界，并探索 AI 辅助数学发现的过程。
+  lean_title: Adaptive ADMM in Lean
+  lean_description: 用 Lean 4 形式化自适应 ADMM 的收敛性分析，把算法、参数策略与数学假设之间的关系写清楚。
+  lean_status: 形式化数学 · 开源项目
+  course_title: VeryMath 智慧教材
+  course_description: 围绕教材阅读的学习工作台，把教材、提问、讲解与学习资料放在一起。
+en:
+  subtitle: AI4Math · Optimization · Formal Mathematics
+  bio: |
+    I work on **AI4Math, optimization, and formal mathematics**, and build tools for research and learning.
+
+    A simple question connects my projects: how can a mathematical idea become something we can understand, compute, and verify? I study the convergence and failure of ADMM iterations, formalize optimization algorithms in Lean 4, and explore how AI can participate in mathematical research.
+
+    I also keep a [blog](/blog/) for derivations, project notes, and ideas that become clearer as I learn.
+  paper_title: AI-assisted discovery of counterexamples for three-block ADMM
+  paper_description: Direct three-block ADMM can fail even when its third constraint block is the identity. Periodic orbits expose the limits of this structure and provide a case study in AI-assisted mathematical discovery.
+  lean_title: Adaptive ADMM in Lean
+  lean_description: Formalizing convergence analysis for adaptive ADMM in Lean 4, making the connections between algorithms, parameter strategies, and mathematical assumptions explicit.
+  lean_status: Formal mathematics · Open source
+  course_title: VeryMath Course Copilot
+  course_description: A study workspace that keeps textbooks, questions, explanations, and learning materials together.

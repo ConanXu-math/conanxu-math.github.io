@@ -1,4 +1,0 @@
-platforms:
-  - type: Twitter
-    icon: fa-brands fa-x-twitter
-    link: "https://twitter.com/intent/tweet?text=TITLE&url=URL"

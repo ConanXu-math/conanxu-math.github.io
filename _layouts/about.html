@@ -1,0 +1,31 @@
+---
+layout: default
+---
+{% assign ui = site.data.ui[site.active_lang] %}
+{% assign profile = site.data.profile[site.active_lang] %}
+<article class="post about-page">
+  <header class="post-header">
+    <h1 class="post-title"><strong>Conan</strong> Xu</h1>
+    <p class="desc">{{ profile.subtitle }}</p>
+  </header>
+  <div class="intro">
+    <aside class="profile">
+      <img src="{{ '/assets/avatar.png' | relative_url }}" alt="Conan Xu" width="400" height="400" fetchpriority="high">
+      <p class="profile-caption"><a href="https://github.com/ConanXu-math">@ConanXu-math</a></p>
+    </aside>
+    <div class="biography content">{{ profile.bio | markdownify }}</div>
+    <p class="contact-links"><a href="https://github.com/ConanXu-math">GitHub</a><span aria-hidden="true"> / </span><a href="mailto:{{ site.social.email }}">{{ ui.email }}</a><span aria-hidden="true"> / </span><a href="https://conanxu-math.github.io/no-end-for-learning/note.html">{{ ui.study_notes }}</a></p>
+  </div>
+  <section class="home-section" aria-labelledby="selected-research">
+    <div class="section-heading"><h2 id="selected-research">{{ ui.selected_research }}</h2><a href="{{ '/research/' | relative_url }}">{{ ui.all_research }} <span aria-hidden="true">↗</span></a></div>
+    {% include research-entries.html %}
+  </section>
+  <section class="home-section" aria-labelledby="research-software">
+    <div class="section-heading"><h2 id="research-software">{{ ui.software }}</h2><a href="{{ '/projects/' | relative_url }}">{{ ui.all_projects }} <span aria-hidden="true">↗</span></a></div>
+    <div class="software-entry"><h3><a href="https://github.com/ConanXu-math/course-copilot">{{ profile.course_title }}</a></h3><p>{{ profile.course_description }}</p><p class="entry-links"><a href="https://github.com/ConanXu-math/course-copilot">{{ ui.code }}</a><a href="{{ '/blog/course-copilot/' | relative_url }}">{{ ui.read_more }}</a></p></div>
+  </section>
+  <section class="home-section" aria-labelledby="latest-posts">
+    <div class="section-heading"><h2 id="latest-posts">{{ ui.latest_posts }}</h2><a href="{{ '/blog/' | relative_url }}">{{ ui.all_posts }} <span aria-hidden="true">↗</span></a></div>
+    <ul class="latest-posts">{% for post in site.posts limit: 3 %}<li><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>{% endfor %}</ul>
+  </section>
+</article>

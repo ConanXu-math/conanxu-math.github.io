@@ -1,0 +1,10 @@
+---
+layout: default
+---
+{% assign ui = site.data.ui[site.active_lang] %}
+{% assign profile = site.data.profile[site.active_lang] %}
+<article class="post">
+  <header class="post-header"><h1>{{ ui.research }}</h1><p class="desc">{{ ui.research_description }}</p></header>
+  <p class="page-intro">{{ ui.research_intro }}</p>
+  {% include research-entries.html %}
+</article>

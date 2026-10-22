@@ -1,5 +1,5 @@
 ---
-title: Projects
+title: 项目
 icon: fas fa-code
 order: 1
 lang: zh-CN

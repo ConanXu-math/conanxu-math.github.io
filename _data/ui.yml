@@ -1,0 +1,68 @@
+zh-CN:
+  home: 关于
+  research: 研究
+  projects: 项目
+  blog: 博客
+  selected_research: 精选研究
+  software: 研究软件
+  latest_posts: 最新文章
+  all_research: 查看全部研究
+  all_projects: 查看全部项目
+  all_posts: 全部文章
+  blog_description: 关于数学、代码与研究的笔记。
+  research_description: 优化算法、形式化数学与 AI 辅助研究。
+  research_intro: 我关注优化算法的数学性质，以及 AI 如何帮助我们提出、探索和验证数学问题。以下工作包含公开论文与正在发展的开源项目。
+  email: 邮箱
+  study_notes: 学习笔记
+  code: 代码
+  paper: 论文
+  read_more: 项目导读
+  posted: 发布于
+  back_blog: 返回博客
+  contents: 本文目录
+  search: 搜索文章
+  search_placeholder: 输入标题、主题或关键词…
+  search_empty: 没有找到相关文章，试试其他关键词。
+  search_failed: 暂时无法加载文章，请稍后重试。
+  search_hint: 搜索博客中已发布的文章。
+  close: 关闭
+  menu: 导航菜单
+  theme: 切换明暗主题
+  skip: 跳到正文
+  categories: 分类
+  tags: 标签
+  archives: 归档
+en:
+  home: About
+  research: Research
+  projects: Projects
+  blog: Blog
+  selected_research: Selected research
+  software: Research software
+  latest_posts: Latest posts
+  all_research: All research
+  all_projects: All projects
+  all_posts: All posts
+  blog_description: Notes on mathematics, code, and research.
+  research_description: Optimization, formal mathematics, and AI-assisted research.
+  research_intro: I study the mathematical properties of optimization algorithms and how AI can help us formulate, explore, and verify mathematical questions. The work below includes a public preprint and ongoing open-source projects.
+  email: Email
+  study_notes: Study notes
+  code: Code
+  paper: Paper
+  read_more: Project notes
+  posted: Published
+  back_blog: Back to blog
+  contents: On this page
+  search: Search articles
+  search_placeholder: Search titles, topics, or keywords…
+  search_empty: No articles found. Try another keyword.
+  search_failed: Articles could not be loaded. Please try again later.
+  search_hint: Search published articles from this blog.
+  close: Close
+  menu: Navigation menu
+  theme: Toggle color theme
+  skip: Skip to content
+  categories: Categories
+  tags: Tags
+  archives: Archive

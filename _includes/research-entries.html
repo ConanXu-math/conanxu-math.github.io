@@ -1,0 +1,19 @@
+<div class="research-entry">
+  <div class="research-year">2026</div>
+  <div>
+    <h3><a href="https://arxiv.org/abs/2608.14396">{{ profile.paper_title }}</a></h3>
+    <p class="research-meta">Kenan Xu, Xiangfeng Wang · <em>arXiv preprint</em></p>
+    {% if page.url == '/research/' %}<p class="paper-full-title">AI-Assisted Discovery and Construction of a Counterexample to the Convergence of Three-Block ADMM with the Identity Matrix as its Third Constraint Block</p>{% endif %}
+    <p>{{ profile.paper_description }}</p>
+    <p class="entry-links"><a href="https://arxiv.org/abs/2608.14396">{{ ui.paper }}</a><a href="https://github.com/ConanXu-math/identity-slack-admm-cycle-certificate">{{ ui.code }}</a><a href="{{ '/blog/admm-counterexample/' | relative_url }}">{{ ui.read_more }}</a></p>
+  </div>
+</div>
+<div class="research-entry">
+  <div class="research-year">Lean 4</div>
+  <div>
+    <h3><a href="https://github.com/ConanXu-math/adaptive_admm">{{ profile.lean_title }}</a></h3>
+    <p class="research-meta">{{ profile.lean_status }}</p>
+    <p>{{ profile.lean_description }}</p>
+    <p class="entry-links"><a href="https://github.com/ConanXu-math/adaptive_admm">{{ ui.code }}</a></p>
+  </div>
+</div>

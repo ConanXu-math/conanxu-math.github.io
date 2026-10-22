@@ -1,0 +1,6 @@
+---
+layout: default
+---
+{% assign ui = site.data.ui[site.active_lang] %}
+<header class="post-header"><h1>{{ ui.categories }}</h1></header>
+<ul class="taxonomy-list">{% for category in site.categories %}<li><a href="{{ category[0] | slugify | prepend: '/categories/' | append: '/' | relative_url }}">{{ category[0] }} <span>{{ category[1].size }}</span></a></li>{% endfor %}</ul>

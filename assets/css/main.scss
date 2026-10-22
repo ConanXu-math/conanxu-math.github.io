@@ -1,0 +1,12 @@
+---
+---
+@charset "utf-8";
+// Presentation styles adapted from al-folio (MIT), © 2025 Maruan Al-Shedivat.
+@use "variables" with ($max-content-width: {{ site.max_width }}, $purple-color: #254f82);
+@use "themes";
+@use "layout";
+@use "typography";
+@use "navbar";
+@use "footer";
+@use "blog";
+@use "site";
