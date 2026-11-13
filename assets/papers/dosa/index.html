@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>DoSA 论文笔记 · Conan Xu</title>
+  <title>DoSA · 训练与推理流程 · Conan Xu</title>
   <meta name="description" content="从 DSA 训练到 Prefill 与 Decoding，沿完整流程理解 DoSA 的安全上界、候选完整评分和稀疏写回。附论文与中文幻灯片。">
   <link rel="canonical" href="https://conanxu-math.github.io/assets/papers/dosa/">
   <link rel="stylesheet" href="assets/katex/katex.min.css">
@@ -189,7 +189,7 @@
 <body>
   <div class="topline"><div class="wrap"><a href="/blog/dosa/">← 博客文章</a><span>稀疏 Attention · 精确 Top-K · GPU 执行</span><a href="https://arxiv.org/html/2610.13990v1" target="_blank" rel="noreferrer">论文原文 ↗</a></div></div>
   <header class="hero wrap">
-      <div class="hero-row"><div><div class="eyebrow">DoSA · DOTS SPARSE ATTENTION</div><h1>DoSA 论文笔记</h1><p class="subtitle">在保持原始 Top-K 选择规则的条件下，减少完整多头评分、分数写回与选择开销。</p><p class="metadata">Fanxu Meng · Taosong Fang｜Dots Studio, Xiaohongshu Inc.｜arXiv:2610.13990v1</p></div><button class="print-button" id="print">打印当前视图</button></div>
+      <div class="hero-row"><div><div class="eyebrow">DoSA · DOTS SPARSE ATTENTION</div><h1>DoSA：用分数上界加速 Indexer</h1><p class="subtitle">在保持原始 Top-K 选择规则的条件下，减少完整多头评分、分数写回与选择开销。</p><p class="metadata">Fanxu Meng · Taosong Fang｜Dots Studio, Xiaohongshu Inc.｜arXiv:2610.13990v1</p></div><button class="print-button" id="print">打印当前视图</button></div>
     <nav class="resource-links" aria-label="阅读材料"><a href="dosa-paper.pdf">论文 PDF</a><a href="dosa-slides.pdf">中文幻灯片 · 24 页</a><a href="/blog/dosa/">文章与方法总览</a></nav>
     <details class="evidence"><summary>方法总览与 Top-2 算例</summary><figure><img src="dosa-teaser.png" alt="三栏说明图，左侧构造加分上界和扣分下界，中间用 Seed 门槛筛选，右侧以原始分数完成 Top-2" loading="lazy"><figcaption>Seed 分数为 9.1 和 6.1。C 根据上界直接排除，D 完整得分为 9 并写回，E 完整得分为 6 并排除。最终 Top-2 为 Seed 1 和 D。数值为教学算例。</figcaption></figure></details>
     <div class="reading-guide"><nav aria-label="论文内容"><a href="#note-training">① 模型与 Indexer 训练</a><a href="#note-heads">③ H 个 heads 评分</a><a href="#note-screen">④ DoSA 筛选</a><a href="#note-decode">⑧ Decoding</a><a href="#evidence">实验结果</a></nav><div class="legend"><span><i class="dot"></i>DSA 流程</span><span><i class="dot blue"></i>评分定义</span><span><i class="dot green"></i>Prefill 改进</span><span><i class="dot purple"></i>Decoding 改进</span></div></div>
