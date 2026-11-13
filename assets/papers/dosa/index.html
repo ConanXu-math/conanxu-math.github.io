@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>DoSA · 训练与推理流程 · Conan Xu</title>
+  <title>DoSA 论文笔记 · Conan Xu</title>
   <meta name="description" content="从 DSA 训练到 Prefill 与 Decoding，沿完整流程理解 DoSA 的安全上界、候选完整评分和稀疏写回。附论文与中文幻灯片。">
   <link rel="canonical" href="https://conanxu-math.github.io/assets/papers/dosa/">
   <link rel="stylesheet" href="assets/katex/katex.min.css">
@@ -189,13 +189,13 @@
 <body>
   <div class="topline"><div class="wrap"><a href="/blog/dosa/">← 博客文章</a><span>稀疏 Attention · 精确 Top-K · GPU 执行</span><a href="https://arxiv.org/html/2610.13990v1" target="_blank" rel="noreferrer">论文原文 ↗</a></div></div>
   <header class="hero wrap">
-      <div class="hero-row"><div><div class="eyebrow">DoSA · DOTS SPARSE ATTENTION</div><h1>DoSA：用分数上界加速 Indexer</h1><p class="subtitle">在保持原始 Top-K 选择规则的条件下，减少完整多头评分、分数写回与选择开销。</p><p class="metadata">Fanxu Meng · Taosong Fang｜Dots Studio, Xiaohongshu Inc.｜arXiv:2610.13990v1</p></div><button class="print-button" id="print">打印当前视图</button></div>
+      <div class="hero-row"><div><div class="eyebrow">DoSA · DOTS SPARSE ATTENTION</div><h1>DoSA 论文笔记</h1><p class="subtitle">在保持原始 Top-K 选择规则的条件下，减少完整多头评分、分数写回与选择开销。</p><p class="metadata">Fanxu Meng · Taosong Fang｜Dots Studio, Xiaohongshu Inc.｜arXiv:2610.13990v1</p></div><button class="print-button" id="print">打印当前视图</button></div>
     <nav class="resource-links" aria-label="阅读材料"><a href="dosa-paper.pdf">论文 PDF</a><a href="dosa-slides.pdf">中文幻灯片 · 24 页</a><a href="/blog/dosa/">文章与方法总览</a></nav>
     <details class="evidence"><summary>方法总览与 Top-2 算例</summary><figure><img src="dosa-teaser.png" alt="三栏说明图，左侧构造加分上界和扣分下界，中间用 Seed 门槛筛选，右侧以原始分数完成 Top-2" loading="lazy"><figcaption>Seed 分数为 9.1 和 6.1。C 根据上界直接排除，D 完整得分为 9 并写回，E 完整得分为 6 并排除。最终 Top-2 为 Seed 1 和 D。数值为教学算例。</figcaption></figure></details>
     <div class="reading-guide"><nav aria-label="论文内容"><a href="#note-training">① 模型与 Indexer 训练</a><a href="#note-heads">③ H 个 heads 评分</a><a href="#note-screen">④ DoSA 筛选</a><a href="#note-decode">⑧ Decoding</a><a href="#evidence">实验结果</a></nav><div class="legend"><span><i class="dot"></i>DSA 流程</span><span><i class="dot blue"></i>评分定义</span><span><i class="dot green"></i>Prefill 改进</span><span><i class="dot purple"></i>Decoding 改进</span></div></div>
   </header>
   <main class="wrap">
-    <div class="board-heading"><div><div class="column-label">DSA / 原始计算流程</div><h2>训练 → Prefill → Decoding</h2></div><div><div class="column-label">DoSA / 方法与结果</div><h2>具体问题 → 改进方法 → 效果与条件</h2></div></div>
+    <div class="board-heading"><div><div class="column-label">DSA / 原始计算流程</div><h2>训练 → Prefill → Decoding</h2></div><div><div class="column-label">DoSA / 方法与结果</div><h2>上界、GPU 实现与实验结果</h2></div></div>
     <div class="board-scroll" id="board-scroll">
       <div class="board" id="board" data-ready="false">
         <section class="flow-panel" aria-label="LLM 完整训练与推理流程">
@@ -205,7 +205,7 @@
         </section>
         <aside class="notes" id="notes" aria-label="与左侧节点关联的论文说明">
           <details class="note" id="note-training" data-from="train_model" data-color="gray" name="paper-notes">
-            <summary><span class="note-label"><span class="number">01</span>DSA 训练 / DeepSeek-V3.2</span><span class="note-title">主模型与 Indexer 分别学习参数。</span></summary>
+            <summary><span class="note-label"><span class="number">01</span>DSA 训练 / DeepSeek-V3.2</span><span class="note-title">主模型与 Indexer 训练</span></summary>
             <p>Indexer 学习生成 <span class="inline-math" data-tex="\mathbf q_h,\mathbf k_i,w_h"></span> 的参数，使评分分布接近主 Attention 的注意力分布。</p>
             <div class="question"><b>预热训练</b><div><p>冻结主模型，保留 Dense Attention。将主 Attention 各 heads 的分数聚合并归一化，以 KL 损失单独训练 Indexer。</p></div></div>
             <div class="question"><b>稀疏训练</b><div><p>启用 Top-K 稀疏 Attention。主模型用语言建模损失更新；Indexer 在选中位置上继续用 KL 损失训练。Indexer 输入采用 stop-gradient，两组参数按各自目标优化。</p></div></div>
@@ -213,7 +213,7 @@
             <div class="source"><a href="https://arxiv.org/html/2512.02556v1#S2.SS1.SSS1" target="_blank" rel="noreferrer">DeepSeek-V3.2 §2.1.1 · DSA 训练</a><a href="https://arxiv.org/html/2610.13990v1#S6" target="_blank" rel="noreferrer">DoSA §6 · 后续研究</a></div>
           </details>
           <details class="note" id="note-position" data-from="indexer_prepare" data-color="blue" name="paper-notes">
-            <summary><span class="note-label"><span class="number">02</span>表示结构 / 主 Attention 与 Indexer</span><span class="note-title">Indexer 负责选位置，Attention 负责汇总内容。</span></summary>
+            <summary><span class="note-label"><span class="number">02</span>表示结构 / 主 Attention 与 Indexer</span><span class="note-title">Indexer 与主 Attention</span></summary>
             <div class="question"><b>主 Attention</b><div><p>利用自己的 <span class="inline-math" data-tex="Q^{\mathrm A},K^{\mathrm A},V^{\mathrm A}"></span>，计算被选位置的注意力权重，再加权汇总 <span class="inline-math" data-tex="V^{\mathrm A}"></span>。</p></div></div>
             <div class="question"><b>Indexer</b><div><p>使用 <span class="inline-math" data-tex="\mathbf q^{\mathrm I},\mathbf k^{\mathrm I},w^{\mathrm I}"></span>，给可见 token 评分，输出 Top-K 位置编号。随后这些位置编号决定主 Attention 访问哪些 KV。</p></div></div>
             <div class="callout blue">一个当前 token 可以产生 H 个 Indexer query 向量。这里的 H 表示评分路数；N 表示可见 token 数量。</div>
@@ -221,7 +221,7 @@
             <div class="source"><a href="https://arxiv.org/html/2610.13990v1#S2.SS1" target="_blank" rel="noreferrer">§2.1 · 评分对象</a><a href="https://arxiv.org/html/2610.13990v1#S3" target="_blank" rel="noreferrer">§3 · Prefill</a></div>
           </details>
           <details class="note" id="note-heads" data-from="score_sum" data-color="blue" name="paper-notes">
-            <summary><span class="note-label"><span class="number">03</span>评分定义 / H 个 heads</span><span class="note-title">同一个 key 接受 H 路评分，再合成一个分数。</span></summary>
+            <summary><span class="note-label"><span class="number">03</span>评分定义 / H 个 heads</span><span class="note-title">多 Head 评分</span></summary>
             <ol><li>固定当前 token <span class="inline-math" data-tex="t"></span>，取出它的 H 个 query 向量 <span class="inline-math" data-tex="\mathbf q_1,\mathbf q_2,\ldots,\mathbf q_H"></span>，以及对应权重 <span class="inline-math" data-tex="w_1,w_2,\ldots,w_H"></span>。</li><li>固定某个可见 token <span class="inline-math" data-tex="i"></span>。每个 head 都与<strong>同一个 <span class="inline-math" data-tex="\mathbf k_i"></span></strong>计算内积。</li><li>每个内积经过 ReLU，再乘本路权重；沿 head 下标 <span class="inline-math" data-tex="h"></span> 求和，得到 token <span class="inline-math" data-tex="i"></span> 的<strong>一个标量分数 <span class="inline-math" data-tex="s_i"></span></strong>。</li><li>对 N 个可见位置重复，得到 N 个分数；Top-K 沿 token 位置 <span class="inline-math" data-tex="i"></span> 选择。</li></ol>
             <div class="formula"><div class="display-math" data-tex="s_i = \sum_{h=1}^{H} w_h\,\operatorname{ReLU}\!\left(\mathbf q_h^{\top}\mathbf k_i\right)"></div><div class="explain">原文公式 (1)。固定当前 query 后，省略位置 <span class="inline-math" data-tex="t"></span> 与 Indexer 上标 <span class="inline-math" data-tex="\mathrm I"></span>。</div></div>
             <div class="table-wrap"><table><thead><tr><th>符号</th><th>含义</th><th>论文中的例子</th></tr></thead><tbody><tr><td>H</td><td>Indexer 评分头数量</td><td>GLM-5.2 为 32；DeepSeek-V3.2 为 64</td></tr><tr><td>N</td><td>当前 query 可见的 token 数量</td><td>随输入长度与位置 t 变化</td></tr><tr><td>K</td><td>最终选中的位置数量</td><td>实验为 2,048</td></tr></tbody></table></div>
@@ -229,7 +229,7 @@
             <div class="source"><a href="https://arxiv.org/html/2610.13990v1#S2.SS1" target="_blank" rel="noreferrer">§2.1 · 公式 (1)</a><a href="https://arxiv.org/html/2610.13990v1#S4.SS1" target="_blank" rel="noreferrer">§4.1 · H 与 K</a></div>
           </details>
           <details class="note" id="note-screen" data-from="dense_scores" data-color="green" name="paper-notes">
-            <summary><span class="note-label"><span class="number">04</span>Prefill 改进 / 减少完整多头评分</span><span class="note-title">先证明无法入选，再省去完整评分。</span></summary>
+            <summary><span class="note-label"><span class="number">04</span>Prefill 改进 / 减少完整多头评分</span><span class="note-title">得分上界与候选筛选</span></summary>
             <div class="question"><b>原有问题</b><div><p>原始方式对每个可见 key 计算全部 H 个 heads。单个 query 约需 HN 次长度为 D 的内积。约 1M tokens 时，Indexer 占 Prefill GPU 时间的 73.0%（GLM）与 90.8%（DeepSeek）。</p></div></div>
             <div class="question"><b>改进方式</b><div><p>在 <span class="inline-math" data-tex="N\ge K"></span> 时，用 seed 建立入选门槛 <span class="inline-math" data-tex="\tau"></span>，再用少量 heads 和保守补偿得到分数上界 <span class="inline-math" data-tex="U_i"></span>。仅当 <span class="inline-math" data-tex="U_i&lt;\tau"></span> 时排除；保留候选继续完成原始 H-head 评分。</p></div></div>
             <div class="mini-flow" id="screen-flow" aria-label="DoSA 替换全量评分的计算路径"></div>
@@ -242,7 +242,7 @@
             <div class="source"><a href="https://arxiv.org/html/2610.13990v1#S2" target="_blank" rel="noreferrer">§2 · 方法</a><a href="https://arxiv.org/html/2610.13990v1#S4.SS2" target="_blank" rel="noreferrer">§4.2 · 筛除与计时</a><a href="https://arxiv.org/html/2610.13990v1#A4.SS2" target="_blank" rel="noreferrer">附录 D.2</a></div>
           </details>
           <details class="note" id="note-write" data-from="dense_write" data-color="green" name="paper-notes">
-            <summary><span class="note-label"><span class="number">05</span>Prefill 改进 / GPU 执行与写回</span><span class="note-title">让读取、计算和写回配合筛选结果。</span></summary>
+            <summary><span class="note-label"><span class="number">05</span>Prefill 改进 / GPU 执行与写回</span><span class="note-title">GPU 计算与稀疏写回</span></summary>
             <div class="question"><b>原有问题</b><div><p>保留候选的位置不连续；独立读取容易重复加载 Indexer keys。将全部分数写入 HBM 也增加数据传输与选择输入。</p></div></div>
             <div class="question"><b>改进方式</b><div><ul><li>将 query 分组，用 Tensor Core 执行规则筛选计算，重叠 key 读取与计算。</li><li>每组四个 queries 中，在共同可见范围内被至少两个 queries 保留的 Indexer key，共享读取后完成评分。</li><li>完整评分后，仅写回 <span class="inline-math" data-tex="s_i\ge\tau"></span> 的记录；压缩分数编码，并在选择边界恢复使用原始分数。</li></ul></div></div>
             <div class="question"><b>效果</b><div><p>同一个 SciFact 示例中，仅稀疏写回降低检索延迟 <strong>23.4%</strong>；仅筛选降低 <strong>37.4%</strong>；两项合用降低 <strong>47.3%（1.90×）</strong>。设置为 16K queries、896K keys，相对两项均关闭的 Base。</p></div></div>
@@ -250,7 +250,7 @@
             <div class="source"><a href="https://arxiv.org/html/2610.13990v1#S3" target="_blank" rel="noreferrer">§3 · GPU 执行</a><a href="https://arxiv.org/html/2610.13990v1#S4.SS4" target="_blank" rel="noreferrer">§4.4 · 消融</a></div>
           </details>
           <details class="note" id="note-select" data-from="topk_ids" data-color="green" name="paper-notes">
-            <summary><span class="note-label"><span class="number">06</span>Prefill 改进 / 完成原始 Top-K</span><span class="note-title">缩小选择输入，保留原始评分规则。</span></summary>
+            <summary><span class="note-label"><span class="number">06</span>Prefill 改进 / 完成原始 Top-K</span><span class="note-title">精确 Top-K 选择</span></summary>
             <div class="question"><b>原有问题</b><div><p>全量分数记录增加 Top-K 工作。提前排除必须保证仍有入选机会的候选全部得到处理。</p></div></div>
             <div class="question"><b>改进方式</b><div><p>将 seed 与保留候选记录合并，用原始分数执行最终 Top-K。<span class="inline-math" data-tex="U_i=\tau"></span> 与 <span class="inline-math" data-tex="s_i=\tau"></span> 均继续保留；分数编码的边界候选用原始分数处理。</p></div></div>
             <div class="question"><b>保证条件</b><div><p>seed 与候选使用同一 scorer；数值上界覆盖该 scorer 的计算分数；有效候选完整处理。要求相同 token IDs 时，使用相同的并列次序。</p></div></div>
@@ -259,7 +259,7 @@
             <div class="source"><a href="https://arxiv.org/html/2610.13990v1#A1.SS2" target="_blank" rel="noreferrer">附录 A.2 · 定理 1</a><a href="https://arxiv.org/html/2610.13990v1#A3" target="_blank" rel="noreferrer">附录 C · 数值与候选处理</a></div>
           </details>
           <details class="note" id="note-ttft" data-from="first_token" data-color="green" name="paper-notes">
-            <summary><span class="note-label"><span class="number">07</span>完整请求效果 / 输入到首个 token</span><span class="note-title">Indexer 加速怎样减少等待时间。</span></summary>
+            <summary><span class="note-label"><span class="number">07</span>完整请求效果 / 输入到首个 token</span><span class="note-title">首 Token 延迟（TTFT）</span></summary>
             <div class="question"><b>因果关系</b><div><p>长输入使 Indexer 在 Prefill 中的时间占比增大，节省它的工作会更明显地影响首个 token 的等待时间。Attention、FFN 等计算继续消耗时间。</p></div></div>
             <div class="table-wrap"><table><thead><tr><th>约 1M 输入 / TP8</th><th>相对 SGLang</th><th>相对 LiteTopK</th></tr></thead><tbody><tr><td>GLM-5.2 TTFT</td><td><strong>1.86×</strong></td><td><strong>1.26×</strong></td></tr><tr><td>DeepSeek-V3.2 TTFT</td><td><strong>1.94×</strong></td><td><strong>1.50×</strong></td></tr></tbody></table></div>
             <p class="small">GLM 使用 32K Prefill chunks，DeepSeek 使用 16K。独立请求，测量之间清空 prefix cache。论文正文写明 NVIDIA GPUs，未提供具体型号。</p>
@@ -268,7 +268,7 @@
             <div class="source"><a href="https://arxiv.org/html/2610.13990v1#S4.SS3" target="_blank" rel="noreferrer">§4.3 · TTFT</a><a href="https://arxiv.org/html/2610.13990v1#A4.SS1" target="_blank" rel="noreferrer">附录 D.1 · 计时范围</a></div>
           </details>
           <details class="note" id="note-decode" data-from="decode_select" data-color="purple" name="paper-notes">
-            <summary><span class="note-label"><span class="number">08</span>Decoding 改进 / 每步 query 较少</span><span class="note-title">继续完整 FP8 评分，减少写回与选择。</span></summary>
+            <summary><span class="note-label"><span class="number">08</span>Decoding 改进 / 每步 query 较少</span><span class="note-title">Decoding 评分与选择</span></summary>
             <div class="question"><b>原有问题</b><div><p>逐个生成时每步 query 数量较少，跨 query 复用 key 读取的机会有限，选择工作仍有开销。</p></div></div>
             <div class="question"><b>改进方式</b><div><ol><li>取近期选中的互异 keys，在<strong>当前 query</strong>下重新评分，建立有效门槛。</li><li>继续执行<strong>完整 FP8 多头评分</strong>；只保留达到门槛的选择记录。</li><li>精确 Top-K 后映射位置，更新近期集合供后续生成步骤使用。</li></ol></div></div>
             <div class="table-wrap"><table><thead><tr><th>请求长度</th><th>Decoding Indexer 相对 SGLang</th></tr></thead><tbody><tr><td>256K</td><td><strong>1.06×</strong></td></tr><tr><td>512K</td><td><strong>1.11×</strong></td></tr><tr><td>约 1M</td><td><strong>1.26×</strong></td></tr></tbody></table></div>
