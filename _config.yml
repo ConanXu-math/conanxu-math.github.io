@@ -18,6 +18,7 @@ exclude_from_localization:
   - assets/js/site.js
   - assets/js/theme.js
   - assets/lib
+  - assets/papers
   - sitemap.xml
   - no-end-for-learning
 
