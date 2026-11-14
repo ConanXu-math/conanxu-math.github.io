@@ -1,11 +1,13 @@
 zh-CN:
-  subtitle: AI4Math · 优化算法 · 形式化数学
+  subtitle: AI4Math · 优化算法 · 生成模型 · 形式化验证
   bio: |
-    我关注 **AI4Math、优化算法和形式化数学**，也开发帮助研究与学习的工具。
+    我是徐柯楠，目前是**华东师范大学数学专业硕士生**，2025 年入学。本科于 2021–2025 年就读于宁波大学数学与应用数学专业。我的研究方向是数学优化与人工智能的交叉，主要包括优化器设计、AI 辅助算法研究和生成模型。
 
-    我的研究与实践围绕一个朴素的问题展开：如何把一个数学想法，逐步变成可以理解、计算与检验的结果？我研究 ADMM 迭代的收敛性与反例，用 Lean 4 表达优化算法的假设和证明，并探索 AI 参与数学研究的方式。
+    近期工作包括 Flow Matching 少步蒸馏中的分布补偿，以及 Muon 优化器的谱变换机制。在凸优化方面，我构造并精确验证了[三块 ADMM 的周期 66 反例](/blog/admm-counterexample/)，并研究局部吸引周期与乘子松弛。
 
-    这里也有一个[博客](/blog/)，记录推导、项目实践，以及学习过程中逐渐想明白的事。
+    在 AutoADMM 项目中，我结合演化搜索和数值评测研究罚参数策略，并用 Lean 4 描述优化问题、KKT 条件和收敛分析接口。我也参与了 RealMath-Eval，研究大模型对真实数学作答的评分能力。
+
+    工程工作主要是昇腾 NPU 上的算子开发与大模型推理优化，使用 Ascend C、vLLM-Ascend 和 ACL 图等工具。我还参与 AI4Math Skills 和 VeryMath 项目，开发数学科研与学习工具，并在[博客](/blog/)记录推导与实验。
   paper_title: AI 辅助发现与构造三块 ADMM 的不收敛反例
   paper_description: 当第三个约束块为单位阵时，直接三块 ADMM 仍可能不收敛。通过周期轨道研究这一结构的边界，并探索 AI 辅助数学发现的过程。
   lean_title: Adaptive ADMM in Lean
@@ -14,13 +16,15 @@ zh-CN:
   course_title: VeryMath 智慧教材
   course_description: 围绕教材阅读的学习工作台，把教材、提问、讲解与学习资料放在一起。
 en:
-  subtitle: AI4Math · Optimization · Formal Mathematics
+  subtitle: AI4Math · Optimization · Generative Models · Formal Verification
   bio: |
-    I work on **AI4Math, optimization, and formal mathematics**, and build tools for research and learning.
+    I am a **master's student in Mathematics at East China Normal University**, where I enrolled in 2025. I received my BSc in Mathematics and Applied Mathematics from Ningbo University, where I studied from 2021 to 2025. My research interests lie at the intersection of mathematical optimization and AI, including optimizer design, AI-assisted algorithm research, and generative models.
 
-    A simple question connects my projects: how can a mathematical idea become something we can understand, compute, and verify? I study the convergence and failure of ADMM iterations, formalize optimization algorithms in Lean 4, and explore how AI can participate in mathematical research.
+    My recent work includes distribution compensation for few-step Flow Matching distillation and spectral transformations in the Muon optimizer. In convex optimization, I constructed and exactly verified a [period-66 counterexample for direct three-block ADMM](/blog/admm-counterexample/), and studied locally attracting cycles and multiplier relaxation.
 
-    I also keep a [blog](/blog/) for derivations, project notes, and ideas that become clearer as I learn.
+    In AutoADMM, I combine evolutionary search and numerical evaluation to study penalty-parameter strategies, and use Lean 4 to describe optimization problems, KKT conditions, and interfaces for convergence analysis. I also contributed to RealMath-Eval, studying how language models assess real human mathematical answers.
+
+    My engineering work focuses on operator development and LLM inference optimization on Ascend NPUs, using Ascend C, vLLM-Ascend, and ACL graphs. I also contribute to AI4Math Skills and VeryMath, build tools for mathematical research and learning, and keep a [blog](/blog/) for derivations and experiments.
   paper_title: AI-assisted discovery of counterexamples for three-block ADMM
   paper_description: Direct three-block ADMM can fail even when its third constraint block is the identity. Periodic orbits expose the limits of this structure and provide a case study in AI-assisted mathematical discovery.
   lean_title: Adaptive ADMM in Lean
