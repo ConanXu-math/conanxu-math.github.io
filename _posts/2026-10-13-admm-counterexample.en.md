@@ -304,7 +304,7 @@ v^{23n+j}\longrightarrow\bar v^j,
 \qquad j=0,\ldots,22.
 $$
 
-The 23 limiting phases are distinct, so the complete sequence continues cycling. This is an open set of reduced initializations for **one fixed optimization problem**.
+The full sequence therefore has 23 distinct subsequential limits. This is an open set of reduced initializations for **one fixed optimization problem**.
 
 | Property | Period 66 | Period 23 |
 | --- | --- | --- |
@@ -327,7 +327,7 @@ $$
 \qquad\tau>0.
 $$
 
-Standard ADMM corresponds to $$\tau=\beta$$. For the period-66 problem, $$\beta=1$$, and the paper establishes three different scopes
+Standard ADMM corresponds to $$\tau=\beta$$. The step-size analysis uses the six-dimensional state $$w=(y,z,\lambda)$$ to retain the separate slack and multiplier updates. For the period-66 problem, $$\beta=1$$, the paper establishes three different scopes
 
 | Step range | Exact guarantee |
 | --- | --- |
