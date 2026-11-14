@@ -1,0 +1,90 @@
+#article-content h2,
+#article-content h3 {
+  scroll-margin-top: 88px;
+}
+
+@media screen and (min-width: 1100px) {
+  .article-main {
+    max-width: 1164px;
+    padding-inline: 32px;
+  }
+
+  .article-page.article-with-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    grid-template-areas:
+      "header toc"
+      "content toc"
+      "footer toc";
+    column-gap: 40px;
+    max-width: none;
+  }
+
+  .article-with-toc > .post-header {
+    grid-area: header;
+    min-width: 0;
+  }
+
+  .article-with-toc > .post-content {
+    grid-area: content;
+    min-width: 0;
+  }
+
+  .article-with-toc > .article-footer {
+    grid-area: footer;
+    min-width: 0;
+  }
+
+  .article-with-toc > .article-toc {
+    grid-area: toc;
+    align-self: start;
+    position: sticky;
+    top: 88px;
+    margin: 0;
+    padding: 0 0 0 18px;
+    border-block: 0;
+    border-left: 1px solid var(--global-divider-color);
+    min-width: 0;
+  }
+
+  .article-toc summary {
+    list-style: none;
+    cursor: default;
+    font-size: .85rem;
+    font-weight: 500;
+    padding: 0 8px 8px;
+  }
+
+  .article-toc summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .article-toc nav {
+    max-height: calc(100vh - 154px);
+    max-height: calc(100dvh - 154px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    padding: 0 6px 4px 0;
+    gap: 3px;
+  }
+
+  .article-toc a {
+    padding: 4px 8px;
+    color: var(--global-text-color-light);
+    font-size: .85rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .article-toc a:hover,
+  .article-toc a:focus-visible {
+    color: var(--global-theme-color);
+  }
+
+  .article-toc .toc-subheading {
+    padding-left: 20px;
+    font-size: .8rem;
+  }
+}

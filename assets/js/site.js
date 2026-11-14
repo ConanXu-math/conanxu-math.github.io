@@ -16,7 +16,25 @@
     if (heading.tagName === 'H3') link.className = 'toc-subheading';
     toc.append(link);
   });
-  if (toc && !toc.children.length) toc.parentElement.hidden = true;
+  if (toc && !toc.children.length) {
+    toc.parentElement.hidden = true;
+    document.querySelector('.article-page').classList.remove('article-with-toc');
+    document.getElementById('main').classList.remove('article-main');
+  }
+  if (toc?.children.length) {
+    const disclosure = toc.closest('details');
+    const summary = disclosure.querySelector('summary');
+    const desktop = window.matchMedia('(min-width: 1100px)');
+    const syncTocLayout = () => {
+      disclosure.open = desktop.matches;
+      summary.tabIndex = desktop.matches ? -1 : 0;
+    };
+    syncTocLayout();
+    desktop.addEventListener('change', syncTocLayout);
+    summary.addEventListener('click', event => {
+      if (desktop.matches) event.preventDefault();
+    });
+  }
 
   const dialog = document.getElementById('search-dialog');
   const input = document.getElementById('search-input');

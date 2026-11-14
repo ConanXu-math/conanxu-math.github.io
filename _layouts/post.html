@@ -2,7 +2,7 @@
 layout: default
 ---
 {% assign ui = site.data.ui[site.active_lang] %}
-<article class="post article-page">
+<article class="post article-page{% if page.toc %} article-with-toc{% endif %}">
   <header class="post-header">
     <p class="breadcrumb"><a href="{{ '/blog/' | relative_url }}">{{ ui.blog }}</a> <span aria-hidden="true">/</span> {{ page.categories | first }}</p>
     <h1 class="post-title">{{ page.title }}</h1>
