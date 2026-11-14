@@ -163,12 +163,12 @@ z^{k+1}=[q^{k+1}]_+,
 \lambda^{k+1}=q^{k+1}-[q^{k+1}]_+=[q^{k+1}]_-,
 $$
 
-where $$[u]_-$$ takes $$\min(u_i,0)$$ componentwise. After a projection–multiplier update, $$q=z+\lambda$$ therefore determines both variables, and $$z-\lambda=|q|$$.
+where $$[u]_-$$ takes $$\min(u_i,0)$$ componentwise. After a projection–multiplier update, $$q=z+\lambda$$ therefore determines both variables, and $$z-\lambda=\lvert q\rvert$$.
 
 The four-dimensional state $$s=(y,q)$$ suffices for the subsequent dynamics. The next $$x$$ is recovered by
 
 $$
-x^+=M(b-y-|q|).
+x^+=M(b-y-\lvert q\rvert).
 $$
 
 The reduced recurrence is
@@ -176,7 +176,7 @@ The reduced recurrence is
 $$
 \begin{aligned}
 g&=(I_2-M)b,\\
-p&=My-(I_2-M)|q|+g,\\
+p&=My-(I_2-M)\lvert q\rvert+g,\\
 y^+&=Np,\\
 q^+&=(I_2-N)p+[q]_+.
 \end{aligned}
@@ -238,7 +238,7 @@ $$
 specifies a rational initial state. Together with the preceding formulas for $$M,N,b$$ and the reduced recurrence, this determines $$y^0,q^0$$ completely. Set $$z^0=[q^0]_+$$, $$\lambda^0=[q^0]_-$$, and
 
 $$
-x^0=M(b-y^{65}-|q^{65}|).
+x^0=M(b-y^{65}-\lvert q^{65}\rvert).
 $$
 
 This reconstructs a full initial state consistent with the cycle. The public orbit file stores the expanded rational values.
