@@ -1,5 +1,5 @@
 zh-CN:
-  subtitle: AI4Math · 优化算法 · 形式化数学
+  subtitle: AI4Math · 优化算法 · 生成模型 · AI Infra 与推理优化
   bio: |
     我主要关注优化算法、AI4Math 和生成模型，也做 Lean 4 形式化验证，以及 AI Infra 与推理优化。
 
@@ -12,7 +12,7 @@ zh-CN:
   course_title: VeryMath 智慧教材
   course_description: 围绕教材阅读的学习工作台，把教材、提问、讲解与学习资料放在一起。
 en:
-  subtitle: AI4Math · Optimization · Formal Mathematics
+  subtitle: AI4Math · Optimization · Generative Models · AI Infra and Inference Optimization
   bio: |
     I focus on optimization algorithms, AI4Math, and generative models. I also work on formal verification with Lean 4, AI infrastructure, and inference optimization.
 
