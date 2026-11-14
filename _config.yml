@@ -12,7 +12,7 @@ lang_vars: [lang]
 parallel_localization: false
 exclude_from_localization:
   - assets/avatar.png
-  - assets/favicon.svg
+  - assets/favicon-art.png
   - assets/favicon.png
   - assets/apple-touch-icon.png
   - assets/img
