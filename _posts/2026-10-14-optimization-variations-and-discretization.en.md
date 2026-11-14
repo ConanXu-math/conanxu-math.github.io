@@ -15,7 +15,7 @@ A useful starting point is a single operation: **choose a candidate, perturb it 
 
 This note follows that viewpoint through directional derivatives, first variations, Euler–Lagrange equations, constraint multipliers, and Galerkin discretization.
 
-## 1. Start with the first-order change along admissible perturbations
+## 1. Admissible perturbations and first-order conditions
 
 Suppose a direction $$h$$ is admissible in both signs: $$x+\varepsilon h$$ remains feasible for sufficiently small positive and negative $$\varepsilon$$. If $$x^\star$$ is a local extremum, then
 
@@ -40,7 +40,7 @@ The reasoning has four steps:
 
 Stationarity is generally a necessary condition for local optimality. Establishing a minimum requires additional information, such as convexity or second-order conditions.
 
-## 2. Why finite-dimensional optimization gives a zero gradient
+## 2. Stationarity in finite-dimensional optimization
 
 Consider a differentiable, unconstrained problem
 
@@ -82,7 +82,7 @@ $$
 
 The more fundamental statement is **$$Df(x^\star)=0$$**. The derivative is a linear functional acting on a direction; the gradient is its vector representation under an inner product.
 
-## 3. Variational problems optimize an entire function
+## 3. First variations in function spaces
 
 Now let the candidate be an entire function $$x(\cdot)$$, and let the objective be a functional
 
@@ -134,7 +134,7 @@ $$
 
 Its structure is the same as $$Df(x^\star)[h]=0$$ in finite dimensions.
 
-### A first variation is not the same object as a functional derivative
+### First variations and functional derivatives
 
 The initial object is
 
@@ -171,7 +171,7 @@ If $$V$$ is dense in $$L^2$$, vanishing first variation for every perturbation i
 
 A general function-space derivative need not have an ordinary $$L^2$$ representative. In that case, the derivative acting on perturbations, or its weak form, remains the appropriate object.
 
-## 4. Deriving the Euler–Lagrange equation
+## 4. The Euler–Lagrange equation
 
 Consider the integral functional for a scalar function
 
@@ -285,7 +285,7 @@ $$
 
 The Euler–Lagrange equation is thus an explicit form of stationarity for this particular integral functional. With free endpoints, the boundary term must also be considered, producing the corresponding natural boundary conditions.
 
-## 5. What does differentiation with respect to velocity mean?
+## 5. Derivatives with respect to velocity
 
 First write the integrand as an ordinary multivariable function
 
@@ -323,7 +323,7 @@ $$
 
 so this is precisely $$m\ddot x=F(x)$$. The calculation establishes stationarity of the action; whether that stationary path minimizes the action is a separate question.
 
-## 6. Dimension depends on degrees of freedom, and coordinates have different roles
+## 6. Dimension and coordinates in function spaces
 
 An object written as a function of $$t$$ need not be infinite-dimensional. For example,
 
@@ -367,11 +367,11 @@ $$
 
 Here $$t$$ is an internal coordinate of the candidate, while $$\tau$$ parametrizes the optimization process. Changing the inner product used to represent the gradient changes the descent direction.
 
-## 7. Where KKT and function-space multipliers belong
+## 7. KKT conditions and function-space multipliers
 
 Unconstrained finite-dimensional problems lead to gradient stationarity, and unconstrained variational problems lead to vanishing first variation. Constraints add feasibility conditions and dual variables to the first-order system.
 
-### Finite-dimensional constraints and KKT
+### KKT conditions for finite-dimensional constraints
 
 Consider
 
@@ -407,7 +407,7 @@ $$
 
 They express stationarity, primal feasibility, dual feasibility, and complementary slackness.
 
-### Why a dynamic constraint introduces an adjoint function
+### Dynamic constraints and adjoint equations
 
 Function-space problems also admit constraint multipliers. Finitely many scalar constraints have scalar multipliers; an operator constraint has a multiplier in the dual of its constraint-value space. For familiar smooth dynamic constraints, this multiplier appears as a time-dependent adjoint function.
 
@@ -461,7 +461,7 @@ This calculation shows the origin of the state equation, adjoint equation, and i
 
 The relationship is therefore: **Euler–Lagrange expands stationarity for an integral functional; KKT is a first-order multiplier system for constrained optimization.** Function-space multipliers lead further to adjoint variables in optimal control. They share a variational viewpoint, with the relevant object spaces and constraints specified in each case.
 
-## 8. Galerkin connects function-space conditions to coefficient gradients
+## 8. Galerkin discretization and coefficient gradients
 
 Choose a finite-dimensional subspace of the perturbation space,
 
@@ -507,7 +507,7 @@ $$
 
 This is the Galerkin stationarity condition for the variational problem. The residual first-order action vanishes on the chosen perturbation subspace. The equivalence is exact for each fixed $$V_n$$; convergence of discrete solutions as the space is refined requires additional analysis.
 
-### Coefficient gradients still depend on the inner product
+### Coefficient gradients and the mass matrix
 
 Equivalent stationary conditions do not imply that the Euclidean coefficient gradient equals the expansion coefficients of a function-space gradient.
 
@@ -537,7 +537,7 @@ $$
 
 The matrix $$M$$ is the Gram matrix of the basis, commonly called the mass matrix in finite elements. It equals the identity only when the basis is orthonormal under the chosen inner product. This explains how one stationary problem can produce different gradient descent directions.
 
-## 9. Why this common viewpoint is useful
+## 9. Variational derivations and numerical methods
 
 First, the Euler–Lagrange equation becomes something we can derive rather than memorize in isolation. Calculate the first variation and handle the boundary terms. The same procedure extends to higher derivatives and multiple fields.
 
@@ -545,7 +545,7 @@ Second, the connection between weak formulations and numerical methods becomes n
 
 Finally, derivatives, gradients, and multipliers have distinct roles: the derivative describes the objective's first-order response to perturbations, an inner product represents that response as a gradient, and multipliers incorporate constraints into the first-order system.
 
-## 10. A dictionary between the two settings
+## 10. Finite-dimensional and function-space formulations
 
 | Structure | Finite-dimensional optimization | Function-space variations |
 | --- | --- | --- |
@@ -561,7 +561,7 @@ Finally, derivatives, gradients, and multipliers have distinct roles: the deriva
 
 The guiding order is: **identify the optimization object, identify admissible perturbations, then calculate the first-order change.** Zero gradients, Euler–Lagrange equations, KKT conditions, and Galerkin discretization address different parts of this common construction.
 
-## Further reading
+## References
 
 - Gilbert Strang, [Calculus of Variations, Section 7.2](https://ocw.mit.edu/courses/18-086-mathematical-methods-for-engineers-ii-spring-2006/e94c05947ed036cd6ad0150102087062_am72.pdf), for first variations and weak and strong forms.
 - Stephen Boyd and Lieven Vandenberghe, [Convex Optimization, Section 5.5.3](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf), for KKT conditions and their context.
