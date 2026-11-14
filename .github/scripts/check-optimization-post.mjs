@@ -39,7 +39,7 @@ try {
     page.on('pageerror', error => errors.push(error.message));
     const response = await page.goto(`http://127.0.0.1:4173${prefix}/blog/optimization-convergence-map/`);
     assert.equal(response.status(), 200);
-    await page.waitForFunction(() => window.MathJax?.startup?.document, { timeout: 90000 });
+    await page.waitForFunction(() => window.MathJax?.startup?.document, undefined, { timeout: 90000 });
     await page.evaluate(() => MathJax.startup.promise);
     await page.waitForFunction(count => document.querySelectorAll('#article-content .mermaid-diagram svg').length === count, diagramCount, { timeout: 90000 });
 
@@ -55,7 +55,7 @@ try {
     assert.deepEqual(brokenToc, [], '目录存在无效锚点');
 
     await page.locator('#theme-toggle').click();
-    await page.waitForFunction(() => Array.from(document.querySelectorAll('.mermaid-diagram')).every(node => node.dataset.renderedTheme === 'dark'), { timeout: 90000 });
+    await page.waitForFunction(() => Array.from(document.querySelectorAll('.mermaid-diagram')).every(node => node.dataset.renderedTheme === 'dark'), undefined, { timeout: 90000 });
     assert.equal(await page.locator('#article-content .mermaid-diagram svg').count(), diagramCount);
     await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(await page.locator('#article-content .mermaid-diagram svg').count(), diagramCount);
