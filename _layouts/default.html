@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/math.css' | relative_url }}">
     {% if page.layout == 'post' and page.toc %}
-      <link rel="stylesheet" href="{{ '/assets/css/article-toc.css' | relative_url }}">
+      <link rel="stylesheet" href="{{ '/assets/css/article-toc.css' | relative_url }}?v={{ site.time | date: '%s' }}">
     {% endif %}
     <link rel="stylesheet" href="{{ '/assets/css/jekyll-pygments-themes-github.css' | relative_url }}" media="(prefers-color-scheme: light)" id="highlight-light">
     <link rel="stylesheet" href="{{ '/assets/css/jekyll-pygments-themes-native.css' | relative_url }}" media="(prefers-color-scheme: dark)" id="highlight-dark">
