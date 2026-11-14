@@ -1,6 +1,6 @@
 ---
-title: "Keeping textbooks, questions, and learning materials together"
-description: "An introduction to VeryMath Course Copilot, a local study workspace organized around reading a textbook."
+title: "VeryMath Course Copilot"
+description: "A local textbook PDF workspace with agent-assisted questions, exercises, knowledge graphs, and LaTeX slides."
 categories: [AI and Tools]
 tags: [Learning, AI, Open Source]
 lang: en
@@ -12,7 +12,7 @@ Reading a textbook that requires careful reasoning naturally leads to many side 
 
 VeryMath Course Copilot brings these activities into one workspace: the textbook stays visible while questions and learning materials remain connected to what is being read.
 
-## Start with a textbook, then a conversation
+## Textbook import and agent connection
 
 The project is designed for personal deployment. Users import their own textbook PDFs, read them in a browser, and connect a coding agent they already use.
 
@@ -20,7 +20,7 @@ The textbook provides the structure. A task can refer to the current page, a sel
 
 Compared with repeatedly copying fragments into separate conversations, this arrangement offers a more continuous starting point for study.
 
-## Several kinds of learning in one workspace
+## Study features
 
 According to the public project documentation, the workspace supports explanations, exercises, mind maps, knowledge graphs, and LaTeX slides based on the textbook.
 
@@ -33,7 +33,7 @@ These serve different purposes:
 
 The connected agent performs the teaching tasks. Results depend on the deployment, chosen model, and available tools. Generated formulas, derivations, and important numbers still need to be checked against the original text.
 
-## Materials stay in a personal workspace
+## Local materials
 
 Textbooks, reading positions, conversations, and generated materials are saved in local course directories. Supplementary notes, exercise solutions, and references can be stored with the corresponding course for later use.
 
@@ -41,13 +41,13 @@ Local storage and model processing are separate considerations. Local storage de
 
 The workspace also requires a local service to connect to the agent. Uploading a static web page alone is not enough to run the complete application.
 
-## Keep the tool centered on a real question
+## Course organization
 
 A useful study tool does more than offer buttons. It should help the learner stay with the question at hand.
 
 Where the reading stopped, what was cited, and which chapter a generated note belongs to all affect whether a single question can become part of an ongoing learning process. VeryMath uses the textbook and course directory to connect these activities.
 
-## Further reading
+## Repository and documentation
 
 This article is an introduction based on the public README.
 

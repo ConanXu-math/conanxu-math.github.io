@@ -1,6 +1,6 @@
 ---
-title: "When an iteration comes full circle: counterexamples for three-block ADMM"
-description: "An algorithm can keep moving without approaching a solution. Two periodic orbits illustrate how a numerical observation can become a precise mathematical counterexample."
+title: "Periodic-orbit counterexamples for three-block ADMM"
+description: "Two convex quadratic programs with an identity third constraint block and non-KKT orbits of periods 66 and 23."
 categories: [Mathematics and Optimization]
 tags: [ADMM, AI4Math, Optimization]
 lang: en
@@ -12,7 +12,7 @@ Some failures of iterative algorithms are easy to recognize: values grow larger 
 
 This three-block ADMM project studies the latter situation.
 
-## Where the question begins
+## Problem setting
 
 ADMM splits an optimization problem into parts and updates them in turn. Using more blocks can make individual steps easier to compute, but it also changes the behavior of the complete iteration. A natural extension need not inherit the convergence guarantees of the original method.
 
@@ -20,7 +20,7 @@ The particular question here is whether an identity matrix in the third constrai
 
 The public repository gives two fixed convex quadratic programs. Both have a unique KKT point, yet direct three-block ADMM can produce bounded, non-KKT periodic orbits. The identity structure of the third block alone therefore does not rule out this failure.
 
-## Two periods, two different statements
+## Periods 66 and 23
 
 The first instance has an orbit with minimal period **66**. Starting from a specified initial state, the iteration returns exactly to that state after 66 steps and repeats.
 
@@ -28,7 +28,7 @@ The second instance has minimal period **23**. In addition to establishing the p
 
 These statements answer different questions. The first concerns one deliberately chosen initialization. The second describes the behavior of a neighborhood for one fixed problem. Neither should be extended to all initializations or all problem data.
 
-## From an apparent cycle to exact verification
+## Exact verification of periodic orbits
 
 Numerical experiments can help locate a candidate orbit. But states that appear to coincide in finite precision are not, by themselves, an exact proof of periodicity.
 
@@ -42,7 +42,7 @@ Turning the observation into a precise result requires answering several questio
 
 The project provides exact, recomputable verification materials for these questions. The period-66 instance also has cross-checks using different implementations. The period-23 instance uses rational data and includes verification of a local invariant set.
 
-## What comes after AI-assisted discovery
+## AI-assisted search and mathematical verification
 
 The repository also documents AI-assisted searches for the counterexamples. One useful distinction runs throughout this process: finding a candidate, explaining a phenomenon, and verifying a conclusion are connected but different activities.
 
@@ -50,7 +50,7 @@ Computation can point toward promising directions. Mathematical analysis must th
 
 For this problem, the main result is a concrete counterexample that can be stated precisely and checked step by step, beyond a plot that merely appears not to converge.
 
-## Further reading
+## Paper and code
 
 This article is an introduction based on the public repository and does not present a new proof.
 
