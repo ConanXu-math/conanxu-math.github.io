@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -28,7 +28,7 @@ jobs:
         env:
           JEKYLL_ENV: production
       - name: Install browser and Markdown test dependencies
-        run: npm install --prefix .blog-check --no-package-lock --no-audit --no-fund playwright@1.56.1 unified@11.0.5 remark-parse@11.0.0 remark-math@6.0.0 remark-gfm@4.0.1 remark-frontmatter@5.0.0 unist-util-visit@5.0.0 http-server@14.1.1
+        run: npm install --prefix .blog-check --no-package-lock --no-audit --no-fund playwright@1.62.0 unified@11.0.5 remark-parse@11.0.0 remark-math@6.0.0 remark-gfm@4.0.1 remark-frontmatter@5.0.0 unist-util-visit@5.0.0 http-server@14.1.1
       - name: Install Chromium
         run: node .blog-check/node_modules/playwright/cli.js install --with-deps chromium
       - name: Check formulas, diagrams, links, and themes
