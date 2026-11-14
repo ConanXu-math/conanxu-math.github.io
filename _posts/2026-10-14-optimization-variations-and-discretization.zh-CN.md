@@ -1,5 +1,5 @@
 ---
-title: "从梯度到变分：一阶条件、约束与离散化"
+title: "一阶最优性条件与变分法"
 description: "从允许扰动出发，理解梯度为零、Euler–Lagrange 方程、KKT 与 Galerkin 离散化之间的关系。"
 categories: [数学与优化]
 tags: [优化, 变分法, Euler–Lagrange, KKT, Galerkin]

@@ -1,5 +1,5 @@
 ---
-title: "From gradients to variations: stationarity, constraints, and discretization"
+title: "First-order optimality conditions and calculus of variations"
 description: "A common perturbation viewpoint connects zero gradients, Euler–Lagrange equations, KKT conditions, and Galerkin discretization."
 categories: [Mathematics and Optimization]
 tags: [Optimization, Calculus of Variations, Euler–Lagrange, KKT, Galerkin]
