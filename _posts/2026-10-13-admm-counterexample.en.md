@@ -160,10 +160,10 @@ The slack and multiplier updates imply
 $$
 z^{k+1}=[q^{k+1}]_+,
 \qquad
-\lambda^{k+1}=q^{k+1}-[q^{k+1}]_+=[q^{k+1}]_-,
+\lambda^{k+1}=q^{k+1}-[q^{k+1}]_+=[q^{k+1}]_-.
 $$
 
-where $$[u]_-$$ takes $$\min(u_i,0)$$ componentwise. After a projection–multiplier update, $$q=z+\lambda$$ therefore determines both variables, and $$z-\lambda=\lvert q\rvert$$.
+Here $$[u]_-$$ takes $$\min(u_i,0)$$ componentwise. After a projection–multiplier update, $$q=z+\lambda$$ therefore determines both variables, and $$z-\lambda=\lvert q\rvert$$.
 
 The four-dimensional state $$s=(y,q)$$ suffices for the subsequent dynamics. The next $$x$$ is recovered by
 
@@ -284,7 +284,8 @@ $$
 where $$M_{\mathrm{per}}$$ is the linear part of the one-period return map. For a nonzero phase-zero error $$e$$, one return strictly reduces
 
 $$
-e_+^\top P e_+<e^\top P e.
+e_+^\top P e_+<e^\top P e
+\qquad(e\ne0).
 $$
 
 The surrounding trajectories must also retain the same projection itinerary. Using strict sign margins, the paper certifies the return-invariant ellipsoid
