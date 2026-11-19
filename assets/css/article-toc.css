@@ -1,6 +1,30 @@
 #article-content h2,
-#article-content h3 {
+#article-content h3,
+#article-content h4 {
   scroll-margin-top: 88px;
+}
+
+#article-content .diagram-section {
+  border-top: 1px solid var(--global-divider-color);
+}
+
+#article-content .diagram-section:last-of-type {
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
+#article-content .diagram-section > summary {
+  padding-block: .65rem;
+  cursor: pointer;
+}
+
+#article-content .diagram-section > summary > h3 {
+  display: inline;
+}
+
+@media screen and (max-width: 640px) {
+  #article-content .mermaid-diagram > svg {
+    min-width: var(--diagram-width);
+  }
 }
 
 .article-toc .toc-group {

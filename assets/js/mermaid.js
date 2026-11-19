@@ -4,24 +4,26 @@ const root = document.documentElement;
 const blocks = Array.from(document.querySelectorAll('#article-content pre code'))
   .filter(code => code.matches('.language-mermaid') || code.closest('.language-mermaid'));
 
-const diagrams = blocks.map(code => {
+const diagrams = blocks.map((code, index) => {
   const source = code.textContent;
   const frame = document.createElement('figure');
   frame.className = 'mermaid-diagram';
   frame.style.overflowX = 'auto';
   frame.style.marginInline = '0';
-  const node = document.createElement('div');
-  node.className = 'mermaid';
-  frame.append(node);
   const wrapper = code.closest('.highlighter-rouge');
   if (wrapper) wrapper.replaceWith(frame);
   else code.parentElement.replaceWith(frame);
-  return { source, node, frame };
+  return { source, frame, id: `article-diagram-${index + 1}` };
 });
 
-async function renderDiagrams(theme) {
-  if (diagrams.length === 0) return;
+async function renderVisibleDiagrams() {
   await document.fonts.ready;
+  const theme = root.dataset.theme === 'dark' ? 'dark' : 'light';
+  const pending = diagrams.filter(({ frame }) =>
+    frame.dataset.renderedTheme !== theme && !frame.closest('details:not([open])')
+  );
+  if (!pending.length) return;
+
   mermaid.initialize({
     startOnLoad: false,
     securityLevel: 'strict',
@@ -29,19 +31,23 @@ async function renderDiagrams(theme) {
     fontFamily: 'Roboto, sans-serif',
     flowchart: { htmlLabels: false, useMaxWidth: true }
   });
-  for (const { source, node } of diagrams) {
-    node.removeAttribute('data-processed');
-    node.textContent = source;
+  for (const { source, frame, id } of pending) {
+    const { svg, bindFunctions } = await mermaid.render(`${id}-${theme}`, source);
+    frame.innerHTML = svg;
+    const width = frame.querySelector('svg').viewBox.baseVal.width;
+    frame.style.setProperty('--diagram-width', `${width}px`);
+    bindFunctions?.(frame);
+    frame.dataset.renderedTheme = theme;
   }
-  await mermaid.run({ nodes: diagrams.map(diagram => diagram.node) });
-  for (const { frame } of diagrams) frame.dataset.renderedTheme = theme;
 }
 
-let currentTheme = root.dataset.theme;
-let rendering = renderDiagrams(currentTheme);
-new MutationObserver(() => {
-  const nextTheme = root.dataset.theme;
-  if (nextTheme === currentTheme) return;
-  currentTheme = nextTheme;
-  rendering = rendering.then(() => renderDiagrams(nextTheme));
-}).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+let rendering = Promise.resolve();
+const scheduleRender = () => {
+  rendering = rendering.then(renderVisibleDiagrams);
+};
+
+for (const section of document.querySelectorAll('#article-content details.diagram-section')) {
+  section.addEventListener('toggle', scheduleRender);
+}
+new MutationObserver(scheduleRender).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+scheduleRender();
