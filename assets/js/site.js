@@ -15,8 +15,6 @@
     const link = document.createElement('a');
     link.href = `#${heading.id}`;
     link.textContent = heading.textContent;
-    const section = heading.closest('details.diagram-section');
-    if (section) link.addEventListener('click', () => { section.open = true; });
     if (heading.tagName === 'H2') {
       tocChildren = null;
       if (headings[index + 1]?.tagName === 'H3') {
@@ -42,14 +40,10 @@
     document.getElementById('main').classList.remove('article-main');
   }
   if (toc?.children.length) {
-    const diagramHeadings = Array.from(document.querySelectorAll('#article-content details.diagram-section [id]'));
     const revealTocGroup = () => {
       const link = Array.from(toc.querySelectorAll('a')).find(item => item.hash === location.hash);
       const group = link?.closest('.toc-group');
       if (group) group.open = true;
-      const heading = diagramHeadings.find(item => `#${encodeURIComponent(item.id)}` === location.hash);
-      const section = heading?.closest('details.diagram-section');
-      if (section) section.open = true;
     };
     revealTocGroup();
     window.addEventListener('hashchange', revealTocGroup);
