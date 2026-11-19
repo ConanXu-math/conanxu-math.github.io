@@ -22,22 +22,26 @@ visit(tree, node => {
   }
   if (node.type === 'code' && node.lang === 'mermaid') diagramCount += 1;
   if (node.type === 'table') tableCount += 1;
-  if (node.type === 'link' && node.url.startsWith('https://')) externalLinks.add(node.url);
+  if ((node.type === 'link' || node.type === 'definition') && node.url.startsWith('https://')) {
+    externalLinks.add(node.url);
+  }
 });
-assert.equal(diagramCount, 5, '知识图谱数量不完整');
+assert.equal(diagramCount, 32, '知识图谱数量不完整');
 assert.ok(expectedMath.length > 200, '公式数量异常');
 assert.ok(externalLinks.size >= 27, '参考文献数量不完整');
 assert.ok(!source.includes('chatgpt.com/space/'), '公开文章包含私人整理页面');
 
-const server = httpServer.createServer({ root: '_site', cache: -1 });
-await new Promise(resolve => server.listen(4173, '127.0.0.1', resolve));
-const browser = await chromium.launch();
+const siteUrl = process.env.BLOG_CHECK_URL ?? 'http://127.0.0.1:4173';
+const server = process.env.BLOG_CHECK_URL ? null : httpServer.createServer({ root: '_site', cache: -1 });
+const browser = await chromium.launch({ channel: process.env.BLOG_CHECK_BROWSER });
 try {
+  if (server) await new Promise(resolve => server.listen(4173, '127.0.0.1', resolve));
   for (const prefix of ['', '/en']) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, colorScheme: 'light' });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    const response = await page.goto(`http://127.0.0.1:4173${prefix}/blog/optimization-convergence-map/`);
+    const articlePath = `${prefix}/blog/optimization-convergence-map/`;
+    const response = await page.goto(new URL(articlePath, siteUrl).href);
     assert.equal(response.status(), 200);
     await page.waitForFunction(() => window.MathJax?.startup?.document, undefined, { timeout: 90000 });
     await page.evaluate(() => MathJax.startup.promise);
@@ -51,24 +55,34 @@ try {
     assert.equal(await page.locator('#article-content table').count(), tableCount, '表格结构不完整');
     const renderedLinks = new Set(await page.locator('#article-content a').evaluateAll(links => links.map(link => link.getAttribute('href'))));
     for (const link of externalLinks) assert.ok(renderedLinks.has(link), `缺少文献链接：${link}`);
-    const brokenToc = await page.locator('#article-toc a').evaluateAll(links => links.filter(link => !document.getElementById(decodeURIComponent(link.hash.slice(1)))).map(link => link.href));
-    assert.deepEqual(brokenToc, [], '目录存在无效锚点');
+    const tocLinks = page.locator('#article-toc a');
+    const tocCount = await tocLinks.count();
+    assert.equal(tocCount, await page.locator('#article-content h2, #article-content h3').count(), '目录未覆盖文章标题');
+    const brokenAnchors = await page.locator('#article-toc a, #article-content a[href^="#"]').evaluateAll(links => links.filter(link => !document.getElementById(decodeURIComponent(link.hash.slice(1)))).map(link => link.href));
+    assert.deepEqual(brokenAnchors, [], '文章存在无效跳转链接');
 
+    const diagramSvgs = page.locator('#article-content .mermaid-diagram svg:visible');
+    assert.equal(await diagramSvgs.count(), diagramCount, '桌面端的知识图谱未显示完整');
     await page.locator('#theme-toggle').click();
     await page.waitForFunction(() => Array.from(document.querySelectorAll('.mermaid-diagram')).every(node => node.dataset.renderedTheme === 'dark'), undefined, { timeout: 90000 });
-    assert.equal(await page.locator('#article-content .mermaid-diagram svg').count(), diagramCount);
+    assert.equal(await diagramSvgs.count(), diagramCount, '深色模式的知识图谱未显示完整');
     await page.setViewportSize({ width: 390, height: 844 });
-    assert.equal(await page.locator('#article-content .mermaid-diagram svg').count(), diagramCount);
+    await page.locator('.article-toc > summary').click();
+    const mapLink = page.locator('#article-toc').getByRole('link', { name: '7. 完整知识图谱', exact: true });
+    const mapHash = await mapLink.evaluate(link => link.hash);
+    await mapLink.click();
+    await page.waitForURL(url => url.hash === mapHash);
+    assert.equal(await diagramSvgs.count(), diagramCount, '手机端的知识图谱未显示完整');
     assert.deepEqual(errors, [], '浏览器报告脚本错误');
-    console.log(JSON.stringify({ path: `${prefix}/blog/optimization-convergence-map/`, formulas: actualMath.length, diagrams: diagramCount, tables: tableCount, references: externalLinks.size, theme: 'light/dark', viewport: '1280/390' }));
+    console.log(JSON.stringify({ path: articlePath, toc: tocCount, formulas: actualMath.length, diagrams: diagramCount, tables: tableCount, references: externalLinks.size, theme: 'light/dark', viewport: '1280/390' }));
     await page.close();
   }
 
   const existing = await browser.newPage();
-  await existing.goto('http://127.0.0.1:4173/blog/optimization-variations-and-discretization/');
+  await existing.goto(new URL('/blog/optimization-variations-and-discretization/', siteUrl).href);
   assert.equal(await existing.locator('script[src$="/assets/js/mermaid.js"]').count(), 0, '未使用图谱的文章加载了 Mermaid');
   await existing.close();
 } finally {
   await browser.close();
-  server.close();
+  server?.close();
 }
